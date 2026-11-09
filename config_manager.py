@@ -1,23 +1,10 @@
 import json
 import os
-
-DEFAULT_CONFIG = {
-    "reminder_advance_minutes": 30,
-    "default_reminders": [1440, 60, 30],  # 1 ngày, 1 tiếng, 30 phút trước
-    "check_interval_seconds": 30,
-    "autostart": False,
-    "minimize_to_tray_on_close": True,
-    "play_sound": True,
-    "notify_overdue": True,
-    "notify_due_today": True,
-    "has_shown_tray_hint": False,
-}
-
+DEFAULT_CONFIG = {'reminder_advance_minutes': 30, 'default_reminders': [1440, 60, 30], 'check_interval_seconds': 30, 'autostart': False, 'minimize_to_tray_on_close': True, 'play_sound': True, 'notify_overdue': True, 'notify_due_today': True, 'has_shown_tray_hint': False}
 
 class ConfigManager:
-    """Quản lý các cấu hình cài đặt hệ thống và nhắc nhở của ứng dụng."""
 
-    def __init__(self, filename="settings.json"):
+    def __init__(self, filename='settings.json'):
         base_dir = os.path.dirname(os.path.abspath(__file__))
         self.filepath = os.path.join(base_dir, filename)
         self.config = dict(DEFAULT_CONFIG)
@@ -27,9 +14,8 @@ class ConfigManager:
         if not os.path.exists(self.filepath):
             self.save_config()
             return
-
         try:
-            with open(self.filepath, "r", encoding="utf-8") as f:
+            with open(self.filepath, 'r', encoding='utf-8') as f:
                 data = json.load(f)
                 if isinstance(data, dict):
                     self.config.update(data)
@@ -38,7 +24,7 @@ class ConfigManager:
 
     def save_config(self):
         try:
-            with open(self.filepath, "w", encoding="utf-8") as f:
+            with open(self.filepath, 'w', encoding='utf-8') as f:
                 json.dump(self.config, f, ensure_ascii=False, indent=4)
         except OSError:
             pass
